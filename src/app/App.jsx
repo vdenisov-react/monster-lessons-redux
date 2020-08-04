@@ -7,7 +7,13 @@ class App extends Component {
 
         return (
             <div className="app">
-                <span>Hello world !</span>
+                <input type="text" />
+                <button>Add track</button>
+                <ul>
+                    {this.props.testStore.map((track, index) => {
+                        return <li key={index}>{track}</li>;
+                    })}
+                </ul>
             </div>
         );
     }
