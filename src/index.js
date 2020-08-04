@@ -23,12 +23,22 @@ function playlist(state = [], action) {
 const store = createStore(playlist);
 
 store.subscribe(() => {
-    console.log('subscribe =>', store.getState());
+    const arr = store.getState();
+    console.log('subscribe =>', arr);
+    const list = document.querySelectorAll('.list')[0];
+    list.innerHTML = '';
+    arr.forEach(track => {
+        const li = document.createElement('li');
+        li.textContent = track;
+        list.appendChild(li);
+    });
 });
 
 const addTrackBtn = document.querySelectorAll('.addTrack')[0];
 addTrackBtn.addEventListener('click', () => {
-    const trackName = document.querySelectorAll('.trackInput')[0].value;
+    const input = document.querySelectorAll('.trackInput')[0];
+    const trackName = input.value;
     console.log('trackName =>', trackName);
     store.dispatch({ type: 'ADD_TRACK', payload: trackName });
+    input.value = '';
 });
