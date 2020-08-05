@@ -1,28 +1,35 @@
+// React
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { Router, Route } from 'react-router';
+
+// Redux
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { Router, Route } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+
+// 3rd party
 import { createBrowserHistory } from 'history';
 
+// store
+import reducer from './store/reducers';
+
+// custom
 import * as serviceWorker from './utils/serviceWorker';
 import './index.css';
-
 import App from './app/App';
 import About from './app/About';
 
-import reducer from './store/reducers';
-
-const hashHistory = createBrowserHistory();
-
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+const hashHistory = createBrowserHistory();
+const history = syncHistoryWithStore(hashHistory, store);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={hashHistory}>
+        <Router history={history}>
             <Route exact path="/" component={App} />
             <Route path="/about" component={About} />
         </Router>
