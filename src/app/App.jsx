@@ -5,9 +5,11 @@ import { getTracks } from '../store/actions/tracks.actions';
 
 import Menu from './Menu';
 
-const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks }) => {
+const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks, ownProps }) => {
     let trackInput = '';
     let searchInput = '';
+
+    console.log('ownProps =>', ownProps);
 
     const addTrack = () => {
         console.log('add track =>', trackInput.value);
@@ -51,8 +53,9 @@ const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks }) => {
 
 export default connect(
     // map state to props
-    state => ({
+    (state, ownProps) => ({
         tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)),
+        ownProps,
     }),
     // event emitting methods
     dispatch => ({
