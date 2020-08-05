@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { getTracks } from '../actions/tracks.actions';
+
 class App extends Component {
     addTrack() {
         console.log('add track =>', this.trackInput.value);
@@ -26,6 +28,10 @@ class App extends Component {
                 <div className="searching-form">
                     <input type="text" ref={input => (this.searchInput = input)} />
                     <button onClick={this.findTrack.bind(this)}>Find track</button>
+                </div>
+
+                <div>
+                    <button onClick={this.props.onGetTracks}>Get tracks</button>
                 </div>
 
                 <ul>
@@ -54,6 +60,9 @@ export default connect(
         },
         onFindTrack: searchQuery => {
             dispatch({ type: 'FIND_TRACK', payload: searchQuery });
+        },
+        onGetTracks: () => {
+            dispatch(getTracks());
         },
     }),
 )(App);
