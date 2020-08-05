@@ -5,6 +5,7 @@ class App extends Component {
     addTrack() {
         console.log('add track =>', this.trackInput.value);
         this.props.onAddTrack(this.trackInput.value);
+        this.trackInput.value = '';
     }
 
     render() {
