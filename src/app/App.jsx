@@ -41,7 +41,7 @@ class App extends Component {
 export default connect(
     // map state to props
     state => ({
-        tracks: state.tracks,
+        tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)),
     }),
     // event emitting methods
     dispatch => ({
