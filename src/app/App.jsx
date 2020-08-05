@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { getTracks } from '../actions/tracks.actions';
+
 class App extends Component {
     addTrack() {
         console.log('add track =>', this.trackInput.value);
@@ -60,15 +62,7 @@ export default connect(
             dispatch({ type: 'FIND_TRACK', payload: searchQuery });
         },
         onGetTracks: () => {
-            const asyncGetTracks = () => {
-                return dispatch => {
-                    setTimeout(() => {
-                        console.log('tracks are received');
-                        dispatch({ type: 'FETCH_TRACKS_SUCCESS', payload: [] });
-                    }, 2000);
-                };
-            };
-            dispatch(asyncGetTracks());
+            dispatch(getTracks());
         },
     }),
 )(App);
