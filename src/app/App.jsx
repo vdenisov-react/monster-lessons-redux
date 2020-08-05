@@ -24,7 +24,7 @@ class App extends Component {
 
                 <ul>
                     {this.props.tracks.map((track, index) => {
-                        return <li key={index}>{track}</li>;
+                        return <li key={index}>{track.name}</li>;
                     })}
                 </ul>
             </div>
@@ -40,7 +40,11 @@ export default connect(
     // event emitting methods
     dispatch => ({
         onAddTrack: trackName => {
-            dispatch({ type: 'ADD_TRACK', payload: trackName });
+            const payload = {
+                id: Date.now().toString(),
+                name: trackName,
+            };
+            dispatch({ type: 'ADD_TRACK', payload });
         },
     }),
 )(App);

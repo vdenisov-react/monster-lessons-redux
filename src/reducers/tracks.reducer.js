@@ -1,4 +1,4 @@
-const initialState = ['Smells like spirit', 'Enter Sandman'];
+const initialState = [];
 
 export default function tracksReducer(state = initialState, action) {
     if (action.type === 'ADD_TRACK') {
