@@ -28,6 +28,10 @@ class App extends Component {
                     <button onClick={this.findTrack.bind(this)}>Find track</button>
                 </div>
 
+                <div>
+                    <button onClick={this.props.onGetTracks}>Get tracks</button>
+                </div>
+
                 <ul>
                     {this.props.tracks.map((track, index) => {
                         return <li key={index}>{track.name}</li>;
@@ -54,6 +58,17 @@ export default connect(
         },
         onFindTrack: searchQuery => {
             dispatch({ type: 'FIND_TRACK', payload: searchQuery });
+        },
+        onGetTracks: () => {
+            const asyncGetTracks = () => {
+                return dispatch => {
+                    setTimeout(() => {
+                        console.log('tracks are received');
+                        dispatch({ type: 'FETCH_TRACKS_SUCCESS', payload: [] });
+                    }, 2000);
+                };
+            };
+            dispatch(asyncGetTracks());
         },
     }),
 )(App);
