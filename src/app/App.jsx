@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { getTracks } from '../store/actions/tracks.actions';
 
+import Menu from './Menu';
+
 class App extends Component {
     addTrack() {
         console.log('add track =>', this.trackInput.value);
@@ -20,6 +22,10 @@ class App extends Component {
 
         return (
             <div className="app">
+                <Menu />
+
+                <hr />
+
                 <div className="adding-form">
                     <input type="text" ref={input => (this.trackInput = input)} />
                     <button onClick={this.addTrack.bind(this)}>Add track</button>
