@@ -8,12 +8,18 @@ import './index.css';
 
 import App from './app/App';
 
-const initialState = ['Smells like spirit', 'Enter Sandman'];
+const initialState = {
+    tracks: ['Smells like spirit', 'Enter Sandman'],
+    playlists: ['My home playlist', 'My work playlist'],
+};
 
 function playlist(state = initialState, action) {
     console.log('action =>', action);
     if (action.type === 'ADD_TRACK') {
-        return [...state, action.payload];
+        return {
+            ...state,
+            tracks: [...state.tracks, action.payload],
+        };
     }
     return state;
 }

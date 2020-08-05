@@ -9,7 +9,7 @@ class App extends Component {
     }
 
     render() {
-        console.log('testStore =>', this.props.testStore);
+        console.log('tracks =>', this.props.tracks);
 
         return (
             <div className="app">
@@ -23,7 +23,7 @@ class App extends Component {
                 <button onClick={this.addTrack.bind(this)}>Add track</button>
 
                 <ul>
-                    {this.props.testStore.map((track, index) => {
+                    {this.props.tracks.map((track, index) => {
                         return <li key={index}>{track}</li>;
                     })}
                 </ul>
@@ -35,7 +35,7 @@ class App extends Component {
 export default connect(
     // map state to props
     state => ({
-        testStore: state,
+        tracks: state.tracks,
     }),
     // event emitting methods
     dispatch => ({
