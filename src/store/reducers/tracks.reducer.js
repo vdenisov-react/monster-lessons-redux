@@ -1,6 +1,6 @@
 const initialState = [
     {
-        id: '1234',
+        id: 1234,
         name: 'My super track',
     },
 ];

@@ -10,7 +10,7 @@ const Track = ({ track }) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const trackId = ownProps.match.params.id;
+    const trackId = parseInt(ownProps.match.params.id);
     return {
         track: state.tracks.find(track => track.id === trackId),
     };

@@ -61,7 +61,7 @@ export default connect(
     dispatch => ({
         onAddTrack: trackName => {
             const newTrack = {
-                id: Date.now().toString(),
+                id: Date.now(),
                 name: trackName,
             };
             dispatch({ type: 'ADD_TRACK', payload: newTrack });
