@@ -8,23 +8,29 @@ class App extends Component {
         this.trackInput.value = '';
     }
 
+    findTrack() {
+        console.log('find track =>', this.searchInput.value);
+        this.props.onFindTrack(this.searchInput.value);
+    }
+
     render() {
         console.log('tracks =>', this.props.tracks);
 
         return (
             <div className="app">
-                <input
-                    type="text"
-                    ref={input => {
-                        this.trackInput = input;
-                    }}
-                />
+                <div className="adding-form">
+                    <input type="text" ref={input => (this.trackInput = input)} />
+                    <button onClick={this.addTrack.bind(this)}>Add track</button>
+                </div>
 
-                <button onClick={this.addTrack.bind(this)}>Add track</button>
+                <div className="searching-form">
+                    <input type="text" ref={input => (this.searchInput = input)} />
+                    <button onClick={this.findTrack.bind(this)}>Find track</button>
+                </div>
 
                 <ul>
                     {this.props.tracks.map((track, index) => {
-                        return <li key={index}>{track}</li>;
+                        return <li key={index}>{track.name}</li>;
                     })}
                 </ul>
             </div>
@@ -35,12 +41,19 @@ class App extends Component {
 export default connect(
     // map state to props
     state => ({
-        tracks: state.tracks,
+        tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)),
     }),
     // event emitting methods
     dispatch => ({
         onAddTrack: trackName => {
-            dispatch({ type: 'ADD_TRACK', payload: trackName });
+            const newTrack = {
+                id: Date.now().toString(),
+                name: trackName,
+            };
+            dispatch({ type: 'ADD_TRACK', payload: newTrack });
+        },
+        onFindTrack: searchQuery => {
+            dispatch({ type: 'FIND_TRACK', payload: searchQuery });
         },
     }),
 )(App);
