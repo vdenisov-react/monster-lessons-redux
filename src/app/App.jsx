@@ -5,50 +5,49 @@ import { getTracks } from '../store/actions/tracks.actions';
 
 import Menu from './Menu';
 
-class App extends Component {
-    addTrack() {
-        console.log('add track =>', this.trackInput.value);
-        this.props.onAddTrack(this.trackInput.value);
-        this.trackInput.value = '';
-    }
+const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks }) => {
+    let trackInput = '';
+    let searchInput = '';
 
-    findTrack() {
-        console.log('find track =>', this.searchInput.value);
-        this.props.onFindTrack(this.searchInput.value);
-    }
+    const addTrack = () => {
+        console.log('add track =>', trackInput.value);
+        onAddTrack(trackInput.value);
+        trackInput.value = '';
+    };
 
-    render() {
-        console.log('tracks =>', this.props.tracks);
+    const findTrack = () => {
+        console.log('find track =>', searchInput.value);
+        onFindTrack(searchInput.value);
+    };
 
-        return (
-            <div className="app">
-                <Menu />
+    return (
+        <div className="app">
+            <Menu />
 
-                <hr />
+            <hr />
 
-                <div className="adding-form">
-                    <input type="text" ref={input => (this.trackInput = input)} />
-                    <button onClick={this.addTrack.bind(this)}>Add track</button>
-                </div>
-
-                <div className="searching-form">
-                    <input type="text" ref={input => (this.searchInput = input)} />
-                    <button onClick={this.findTrack.bind(this)}>Find track</button>
-                </div>
-
-                <div>
-                    <button onClick={this.props.onGetTracks}>Get tracks</button>
-                </div>
-
-                <ul>
-                    {this.props.tracks.map((track, index) => {
-                        return <li key={index}>{track.name}</li>;
-                    })}
-                </ul>
+            <div className="adding-form">
+                <input type="text" ref={input => (trackInput = input)} />
+                <button onClick={addTrack}>Add track</button>
             </div>
-        );
-    }
-}
+
+            <div className="searching-form">
+                <input type="text" ref={input => (searchInput = input)} />
+                <button onClick={findTrack}>Find track</button>
+            </div>
+
+            <div>
+                <button onClick={onGetTracks}>Get tracks</button>
+            </div>
+
+            <ul>
+                {tracks.map((track, index) => {
+                    return <li key={index}>{track.name}</li>;
+                })}
+            </ul>
+        </div>
+    );
+};
 
 export default connect(
     // map state to props
