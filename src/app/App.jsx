@@ -10,6 +10,7 @@ class App extends Component {
 
     findTrack() {
         console.log('find track =>', this.searchInput.value);
+        this.props.onFindTrack(this.searchInput.value);
     }
 
     render() {
@@ -45,11 +46,14 @@ export default connect(
     // event emitting methods
     dispatch => ({
         onAddTrack: trackName => {
-            const payload = {
+            const newTrack = {
                 id: Date.now().toString(),
                 name: trackName,
             };
-            dispatch({ type: 'ADD_TRACK', payload });
+            dispatch({ type: 'ADD_TRACK', payload: newTrack });
+        },
+        onFindTrack: searchQuery => {
+            dispatch({ type: 'FIND_TRACK', payload: searchQuery });
         },
     }),
 )(App);
