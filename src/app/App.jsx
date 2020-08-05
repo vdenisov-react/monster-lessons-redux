@@ -1,59 +1,71 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getTracks } from '../store/actions/tracks.actions';
 
-import { getTracks } from '../actions/tracks.actions';
+import Menu from './Menu';
 
-class App extends Component {
-    addTrack() {
-        console.log('add track =>', this.trackInput.value);
-        this.props.onAddTrack(this.trackInput.value);
-        this.trackInput.value = '';
-    }
+const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks, ownProps }) => {
+    let trackInput = '';
+    let searchInput = '';
 
-    findTrack() {
-        console.log('find track =>', this.searchInput.value);
-        this.props.onFindTrack(this.searchInput.value);
-    }
+    console.log('ownProps =>', ownProps);
 
-    render() {
-        console.log('tracks =>', this.props.tracks);
+    const addTrack = () => {
+        console.log('add track =>', trackInput.value);
+        onAddTrack(trackInput.value);
+        trackInput.value = '';
+    };
 
-        return (
-            <div className="app">
-                <div className="adding-form">
-                    <input type="text" ref={input => (this.trackInput = input)} />
-                    <button onClick={this.addTrack.bind(this)}>Add track</button>
-                </div>
+    const findTrack = () => {
+        console.log('find track =>', searchInput.value);
+        onFindTrack(searchInput.value);
+    };
 
-                <div className="searching-form">
-                    <input type="text" ref={input => (this.searchInput = input)} />
-                    <button onClick={this.findTrack.bind(this)}>Find track</button>
-                </div>
+    return (
+        <div className="app">
+            <Menu />
 
-                <div>
-                    <button onClick={this.props.onGetTracks}>Get tracks</button>
-                </div>
+            <hr />
 
-                <ul>
-                    {this.props.tracks.map((track, index) => {
-                        return <li key={index}>{track.name}</li>;
-                    })}
-                </ul>
+            <div className="adding-form">
+                <input type="text" ref={input => (trackInput = input)} />
+                <button onClick={addTrack}>Add track</button>
             </div>
-        );
-    }
-}
+
+            <div className="searching-form">
+                <input type="text" ref={input => (searchInput = input)} />
+                <button onClick={findTrack}>Find track</button>
+            </div>
+
+            <div>
+                <button onClick={onGetTracks}>Get tracks</button>
+            </div>
+
+            <ul>
+                {tracks.map((track, index) => {
+                    return (
+                        <li key={index}>
+                            <Link to={`tracks/${track.id}`}>{track.name}</Link>
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+};
 
 export default connect(
     // map state to props
-    state => ({
+    (state, ownProps) => ({
         tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)),
+        ownProps,
     }),
     // event emitting methods
     dispatch => ({
         onAddTrack: trackName => {
             const newTrack = {
-                id: Date.now().toString(),
+                id: Date.now(),
                 name: trackName,
             };
             dispatch({ type: 'ADD_TRACK', payload: newTrack });
