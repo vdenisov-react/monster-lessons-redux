@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { getTracks } from '../store/actions/tracks.actions';
 
 import Menu from './Menu';
@@ -44,7 +44,11 @@ const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks, ownProps }) => {
 
             <ul>
                 {tracks.map((track, index) => {
-                    return <li key={index}>{track.name}</li>;
+                    return (
+                        <li key={index}>
+                            <Link to={`tracks/${track.id}`}>{track.name}</Link>
+                        </li>
+                    );
                 })}
             </ul>
         </div>
