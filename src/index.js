@@ -7,18 +7,9 @@ import * as serviceWorker from './utils/serviceWorker';
 import './index.css';
 
 import App from './app/App';
+import reducer from './reducers';
 
-const initialState = ['Smells like spirit', 'Enter Sandman'];
-
-function playlist(state = initialState, action) {
-    console.log('action =>', action);
-    if (action.type === 'ADD_TRACK') {
-        return [...state, action.payload];
-    }
-    return state;
-}
-
-const store = createStore(playlist, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
     <Provider store={store}>
