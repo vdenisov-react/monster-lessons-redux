@@ -1,12 +1,19 @@
 import React from 'react';
-import Menu from './Menu';
+import { connect } from 'react-redux';
 
-const Track = () => {
+const Track = ({ track }) => {
     return (
         <div className="track-page">
-            <div>track details ...</div>
+            <div>{track?.name || '---'}</div>
         </div>
     );
 };
 
-export default Track;
+const mapStateToProps = (state, ownProps) => {
+    const trackId = ownProps.match.params.id;
+    return {
+        track: state.tracks.find(track => track.id === trackId),
+    };
+};
+
+export default connect(mapStateToProps)(Track);
