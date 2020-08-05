@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route } from 'react-router';
+import { Router, Route } from 'react-router-dom';
 
 // Redux
 import { createStore, applyMiddleware } from 'redux';
@@ -21,6 +21,7 @@ import * as serviceWorker from './utils/serviceWorker';
 import './index.css';
 import App from './app/App';
 import About from './app/About';
+import Track from './app/Track';
 
 // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
@@ -32,6 +33,7 @@ ReactDOM.render(
         <Router history={history}>
             <Route exact path="/" component={App} />
             <Route path="/about" component={About} />
+            <Route path="/tracks/:id" component={Track} />
         </Router>
     </Provider>,
     document.getElementById('root'),
